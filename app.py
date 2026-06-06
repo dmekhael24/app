@@ -43,11 +43,18 @@ if smiles_input:
             st.write(f"**Hydrogen Bond Acceptors:** {Descriptors.NumHAcceptors(mol)}")
 
         st.divider()
-
-        # Placeholder for the ML Pipeline you proposed
-        st.subheader("🤖 Consensus ML Pipeline (Simulated)")
-        st.info("In the full PhD project, these features will be fed into a Scikit-learn Random Forest classifier trained on ToxRefDB to output a final toxicity score.")
-        st.warning("Simulated Prediction: **High Reactivity Alert (N-N=O group detected)**")
-
+        
+        # --- THE UPGRADED "SMART" PIPELINE ---
+        st.subheader("🤖 Consensus ML Pipeline (Structural Alert)")
+        st.info("In the full PhD project, this section will feature a Scikit-learn Random Forest classifier. For this PoC, it utilizes RDKit SMARTS matching to detect toxicophores.")
+        
+        # Define the Nitrosamine pattern (N-N=O) using SMARTS
+        nitrosamine_pattern = Chem.MolFromSmarts('N-N=O')
+        
+        # Check if the molecule contains the pattern
+        if mol.HasSubstructMatch(nitrosamine_pattern):
+            st.error("🚨 **TOXICOPHORE DETECTED:** Nitrosamine (N-N=O) group found! High risk of mutagenicity. Flagged for Ames MPF testing.")
+        else:
+            st.success("✅ **CLEARED:** No Nitrosamine toxicophore detected in this structure.")
     else:
         st.error("Invalid SMILES string. Please try again.")

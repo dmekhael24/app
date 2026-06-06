@@ -19,7 +19,7 @@ st.title("🧪 NDSRI In Silico Consensus Screener (Proof of Concept)")
 st.markdown("Developed by David Mekhael - University of Gdańsk")
 
 # User Input
-smiles_input = st.text_input("Enter SMILES String:", "O=NN(C)CCC(c1ccccc1)Oc2ccc(cc2)C(F)(F)F") # Default is N-nitroso-fluoxetine
+smiles_input = st.text_input("Enter SMILES String:", "")
 
 if smiles_input:
     mol = Chem.MolFromSmiles(smiles_input)
